@@ -1,0 +1,44 @@
+html{
+  font-size: 16px;
+}
+body{
+  font-family: $font_primary;
+  font-size: 96%;
+  font-weight: 400;
+  min-height: 100vh;
+  background-color: $color_background_body;
+}
+*, ::before, ::after {
+  box-sizing: border-box;
+}
+.cfw-page-content{
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  flex-direction: column;
+  color: #ffffff;
+  text-align: center;
+  font-family: $font_header;
+  > h1{
+    font-size: 2.5rem;
+  }
+}
+
+
+
+/**
+  Triggers the menu to be visible on top of the screen
+  Adds a class to body (with JS)
+ */
+.trigger-menu{
+  @include position(absolute, 2rem null null 2rem);
+  font-size: 2.4rem;
+  color: #ffffff;
+  cursor: pointer;
+  transform: scale(0.92);
+  @include transition(transform 0.2s);
+  &:hover{
+    transform: scale(1);
+  }
+}
+

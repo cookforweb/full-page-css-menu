@@ -1,0 +1,219 @@
+/**
+  The main menu div element.
+  Contains all the menu items
+ */
+.cfw-menu-wrapper{
+  overflow-y: auto;
+  @include position(fixed, 0 0 0 0);
+  visibility: hidden;
+  > .inside{
+    overflow-y: auto;
+    @include position(absolute, 0 0 0 0);
+  }
+  a{
+    text-decoration: none;
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  .cfw-menu-content{
+    padding: 1rem;
+    position: relative;
+    z-index: 999;
+    color: rgba(255, 255, 255, 1);
+    @include transition(visibility $time_visibility);
+    .cfw-menu-header{
+      text-align: center;
+      position: relative;
+      color: #ffffff;
+      font-family: $font_header;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      opacity: 0;
+      visibility: hidden;
+      @include transition(opacity $time_visibility, visibility $time_visibility);
+      > .cfw-menu-title{
+        padding-bottom: 1rem;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.76);
+      }
+      > .cfw-menu-close{
+        @include position(fixed, 1rem 0.5rem null null);
+        z-index: 9990;
+        width: 18px;
+        height: auto;
+        cursor: pointer;
+        font-size: 1.5em;
+      }
+    }
+    > .cfw-menu-body{
+      perspective: 500px;
+      display: flex;
+      flex-wrap: wrap;
+      .cfw-menu-item{
+        flex: 0 0 100%;
+        max-width: 100%;
+        opacity: 0;
+        visibility: hidden;
+        margin-bottom: 2.5rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        @include transition(opacity $time_visibility, transform $time_visibility, visibility $time_visibility);
+        .item-title{
+          font-size: 1rem;
+          font-weight: 800;
+          margin-bottom: 0rem;
+          padding-bottom: 0.75rem;
+          border-bottom: 1px solid rgba(255,255,255,0.50);
+          > a{
+            color: #ffffff;
+          }
+        }
+        .item-content{
+          > ul{
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            > li{
+              perspective: 500px;
+              > a{
+                display: block;
+                padding: 0.4rem 0;
+                border-bottom: 1px solid rgba(255,255,255,0.15);
+                color: #ffffff;
+                backface-visibility: hidden;
+                @include transition(transform 0.25s 0.5s);
+                transform-origin: bottom;
+                > i{
+                  margin-right: 0.75rem;
+                  width: 20px;
+                  color: rgba(255, 255, 255, 0.7);
+                }
+                .item-list-title{
+                  display: block;
+                }
+                .item-list-excerpt{
+                  display: block;
+                  font-size: 0.925em;
+                  color: #c6c6c6;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    .cfw-menu-footer{
+      padding-left: 1rem;
+      padding-right: 1rem;
+      text-align: center;
+      font-size: 0.8em;
+      color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      visibility: hidden;
+      @include transition(opacity $time_visibility $time_visibility/2, visibility $time_visibility $time_visibility/2);
+    }
+  }
+  .cfw-menu-overlay{
+    @include position(fixed, 0 0 0 0);
+    background-color: $color_background_menu_overlay;
+    opacity: 0;
+    visibility: hidden;
+    @include transition(opacity $time_visibility, visibility $time_visibility);
+    transition-delay: 0.5s;
+  }
+}
+
+
+/**
+ Styling while menu is visible
+ .cfw-menu-extended class is appended to body tag
+ */
+body.cfw-menu-extended{
+  overflow: hidden;
+  .cfw-menu-wrapper{
+    .cfw-menu-content{
+      visibility: visible;
+      .cfw-menu-header{
+        visibility: visible;
+        opacity: 1;
+      }
+      .cfw-menu-item{
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0px) rotateX(0deg);
+        .item-title{
+        }
+        .item-content{
+          > ul{
+            > li{
+              > a{
+                transform: rotateX(0deg);
+                @include transition(transform 0.25s 0.5s);
+              }
+            }
+          }
+        }
+      }
+      .cfw-menu-footer{
+        visibility: visible;
+        opacity: 1;
+        @include transition(opacity $time_visibility $time_visibility*2, visibility $time_visibility $time_visibility*2);
+      }
+    }
+    .cfw-menu-overlay{
+      transition-delay: 0s;
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+
+
+@media (min-width: 768px){
+  .cfw-menu-wrapper .cfw-menu-content{
+    padding: 2rem;
+    .cfw-menu-header > .cfw-menu-close{
+      right: 1rem;
+    }
+    > .cfw-menu-body .cfw-menu-item{
+      flex: 0 0 50%;
+      max-width: 50%;
+      transform: translateY(100px) rotateX(-45deg);
+      .item-content > ul > li > a{
+        transform: rotateX(120deg);
+      }
+    }
+  }
+  .cfw-menu-wrapper .cfw-menu-content .cfw-menu-item{
+    @for $i from 1 through $menu_items_num {
+      &.cfw-menu-item-#{$i} {
+        transition-delay: ($menu_offset_delay * $menu_items_num) - ($i * $menu_offset_delay);
+      }
+    }
+  }
+  body.cfw-menu-extended .cfw-menu-wrapper .cfw-menu-content .cfw-menu-item{
+    @for $i from 1 through $menu_items_num {
+      &.cfw-menu-item-#{$i} {
+        transition-delay: $i * $menu_offset_delay;
+        @for $j from 1 through $menu_subitems_num {
+          > .item-content > ul > li:nth-child(#{$j}) > a {
+            transition-delay: 0.3s + (0.2s * $i) + (0.05s * $j);
+          }
+        }
+      }
+    }
+  }
+}
+@media (min-width: 1200px){
+  .cfw-menu-wrapper .cfw-menu-content{
+    padding: 3rem;
+    > .cfw-menu-body .cfw-menu-item{
+      flex: 0 0 #{(100% / $menu_items_num * $menu_rows)};
+      max-width: #{(100% / $menu_items_num * $menu_rows)};
+    }
+  }
+}
+
+

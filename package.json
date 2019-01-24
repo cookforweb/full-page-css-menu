@@ -1,0 +1,15 @@
+{
+  "name": "full-page-css-menu",
+  "version": "0.2.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "CookForWeb",
+  "license": "MIT",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "bourbon": "^5.1.0"
+  }
+}
