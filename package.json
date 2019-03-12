@@ -1,7 +1,7 @@
 {
   "name": "full-page-css-menu",
-  "version": "0.2.1",
-  "description": "",
+  "version": "0.2.2",
+  "description": "A working example adding a full page CSS menu on a website",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,7 +9,7 @@
   "author": "CookForWeb",
   "license": "MIT",
   "dependencies": {
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.3.1",
     "bourbon": "^5.1.0"
   }
 }
